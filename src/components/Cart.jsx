@@ -1,10 +1,10 @@
 // src/components/Cart.jsx
 import React from 'react';
 
-const Cart = ({ cart, onRemoveFromCart, onDecreaseQuantity }) => {
+const Cart = ({ cart, onRemoveFromCart, onDecreaseQuantity, onAddToCart }) => {
   return (
     <div className="border p-4  bg-slate-200 shadow-2xl">
-      <h2 className="text-xl font-bold mb-4">Shopping Cart</h2>
+      <h2 className="text-xl font-bold mb-4">Shopping Cart {cart.length}</h2>
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
@@ -28,7 +28,7 @@ const Cart = ({ cart, onRemoveFromCart, onDecreaseQuantity }) => {
                 <span>{item.quantity}</span>
                 <button
                   className="bg-gray-300 text-gray-700 px-2 py-1 rounded-r m-2"
-                  // Add function to increase quantity if needed
+                  onClick={()=>onAddToCart(item)}
                 >
                   +
                 </button>

@@ -1,10 +1,16 @@
 // src/App.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Product from "./components/Product.jsx";
 import Cart from "./components/Cart.jsx";
 
+const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart') || '[]')
+
 const App = () => {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(cartFromLocalStorage);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]); 
 
   const handleAddToCart = (product) => {
     const existingProductIndex = cart.findIndex(
@@ -13,7 +19,7 @@ const App = () => {
 
     if (existingProductIndex !== -1) {
       const updatedCart = [...cart];
-      updatedCart[existingProductIndex].quantity += product.quantity;
+      updatedCart[existingProductIndex].quantity += 1;
       setCart(updatedCart);
     } else {
       setCart([...cart, product]);
@@ -67,6 +73,7 @@ const App = () => {
           cart={cart}
           onRemoveFromCart={handleRemoveFromCart}
           onDecreaseQuantity={handleDecreaseQuantity}
+          onAddToCart={handleAddToCart}
         />
       </div>
     </div>
